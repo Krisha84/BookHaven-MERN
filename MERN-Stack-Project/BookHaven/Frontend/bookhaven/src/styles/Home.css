@@ -1,127 +1,131 @@
-.home-body {
+.home-container {
     display: flex;
-    /* align-items: center; */
-    /* justify-content: space-between; */
-    min-height: 88vh;
-    background-color: #bbdaf3;
-    padding-right: 1rem;
-    padding-left: 1rem;
+    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
 }
 
-.home-heading {
-    font-size: 4rem;
-    color: #05355c;
-    font-weight: bold;
-    margin-bottom: 2rem;
-    text-align: left;
-    letter-spacing: 1px;
-    animation: fadeIn 1s ease-in-out;
-}
-
-.home-heading span {
-    text-align: center;
-    margin-left: 90px;
-    color: #05355c;
-}
-
-.home-boxmode {
-    margin-top: 80px;
-    float:right;
-    height: 300px;
-    width: 350px;
-}
-
-.home-img{
-    margin-top: 80px;
-    float: left;
-    width: 300px;
-    height: 400px;
+.home-left {
+    flex: 1;
+    background-color: #f0f4f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
 
 .home-image {
-    max-width: 400px;
-    width: 100%;
-    border-radius: 12px;
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 400px;
+    width: 80%;
+    height: 80%;
+    max-height: 500px;
+    object-fit: contain;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.home-image:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-}
-
-.home-content {
+.home-right {
     flex: 1;
-    text-align: center;
-    color: #05355c;
-    max-width: 50%;
+    background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 40px;
-    margin: 30px;
 }
 
-.home-content h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-    color: #05355c;
+.home-text {
+    max-width: 550px;
+    text-align: left;
 }
 
-.home-content h2 span {
-    color: #1d6fe9;
-    font-weight: 600;
+.home-text h1 {
+    font-size: 3rem; /* increased */
+    color: #0d2c54;
+    margin-bottom: 15px;
+    font-weight: 700;
 }
 
-.home-content p {
-    font-size: 1.4rem;
-    color: #4f6f90;
+.home-text h1 span {
+    color: #007bff;
+}
+
+.subtitle {
+    font-size: 1.5rem; /* increased */
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.description {
+    font-size: 1.1rem; /* increased */
+    color: #555;
     line-height: 1.8;
-    max-width: 600px;
-    margin: 0 0 2rem 0;
+    margin-bottom: 30px;
 }
 
-.explore-button {
-    padding: 0.8rem 2rem;
-    background-color: #05355c;
-    color: #fff;
-    border: none;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+.home-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 14px 26px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.05rem;
     text-decoration: none;
+    transition: 0.3s ease;
 }
 
-.explore-button:hover {
-    background-color: #05355c;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+.btn.primary {
+    background-color: #007bff;
+    color: white;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
+.btn.primary:hover {
+    background-color: #0056b3;
+}
+
+.btn.secondary {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn.secondary:hover {
+    background-color: #1e7e34;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .home-container {
+        flex-direction: column;
     }
-    to {
-        opacity: 1;
-    }
-}
 
-@media only screen and (max-width: 768px) {
-    .home-heading {
-        font-size: 3rem;
+    .home-left,
+    .home-right {
+        flex: none;
+        width: 100%;
+        height: auto;
+    }
+
+    .home-image {
+        width: 90%;
+        height: auto;
+        max-height: 300px;
+    }
+
+    .home-text {
         text-align: center;
     }
 
-    .home-content {
-        text-align: center;
-        max-width: 100%;
-    }
-
-    .home-content h2 {
+    .home-text h1 {
         font-size: 2rem;
     }
 
-    .home-content p {
+    .subtitle {
+        font-size: 1.2rem;
+    }
+
+    .description {
         font-size: 1rem;
     }
 }
