@@ -3,14 +3,15 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
-const Book = require('./models/schema');
+const Book = require('./model/schema');
 
 const app = express();
 app.use(cors());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3008;
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI,
