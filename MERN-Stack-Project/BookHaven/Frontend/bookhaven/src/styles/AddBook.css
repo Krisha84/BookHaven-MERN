@@ -1,44 +1,98 @@
+.addbook-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #d4e5f9, #edf2fb);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
 .back-button {
-    padding: 0.8rem 2rem;
-    background-color: #0e4475;
-    color: #fff;
-    border: none;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    margin-bottom: 1.5rem;
     text-decoration: none;
+    color: #0e4475;
+    background-color: #e3efff;
+    padding: 0.6rem 1.4rem;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: all 0.3s ease;
 }
 
 .back-button:hover {
-    background-color: #0e4475; 
+    background-color: #c8dcf0;
+    color: #083b66;
 }
 
-.container {
-    background-color: #c8dfff;
-    min-height: 80vh;
-}
-
-.card {
+.addbook-card {
+    background-color: #ffffff;
+    padding: 2rem;
     border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    max-width: 600px;
+    width: 100%;
 }
 
-.form-control {
-    border: 1px solid #0e4475;
-    background-color: #343a40;
-    color: #ffffff;
+.addbook-card h2 {
+    text-align: center;
+    color: #0e4475;
+    margin-bottom: 1.5rem;
 }
 
-.form-control::placeholder {
-    color: #b0b0b0;
+.addbook-form .form-group {
+    margin-bottom: 1.2rem;
+    display: flex;
+    flex-direction: column;
 }
 
-.form-label {
-    color: #ffffff;
+.addbook-form label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #444;
 }
 
-.btn-success {
+.addbook-form input,
+.addbook-form textarea {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccd6eb;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.addbook-form input:focus,
+.addbook-form textarea:focus {
+    border-color: #0e4475;
+}
+
+.addbook-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.image-preview {
+    margin-top: 10px;
+    height: 200px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid #d0d0d0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.submit-button {
     background-color: #0e4475;
+    color: white;
     border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 30px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 1rem;
     transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #083b66;
 }
