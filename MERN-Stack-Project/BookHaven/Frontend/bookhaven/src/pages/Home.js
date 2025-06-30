@@ -1,28 +1,29 @@
 import { Link } from 'react-router-dom';
 import '../styles/Home.css';
-import image from '../img/books1.jpeg';
-import img from '../img/books.jpeg';
+import banner from '../img/books.jpeg'; // Make sure this is your good wide image
 
 function Home() {
     return (
-        <>
-            <div className="home-body">
-                <div className="home-img">
-                    <img src={img} alt="" className="home-image" />
-                </div>
-                <div className="home-content">
-                    <h1 className="home-heading"><span>BookHaven</span></h1>
-                    <h2 style={{ color: '#0e4475' }}>Buy and sell your <br />books <span>at the best prices</span></h2>
-                    <p style={{ color: '#0e4475' }}>Discover, buy, and sell books you love. Keep track of your favorites, and join a global community of book lovers on BookHaven.</p>
-                    <Link to="/book" className="explore-button">
-                        Explore Now
-                    </Link>
-                </div>
-                <div className="home-boxmode">
-                    <img src={image} alt="" className="home-image" />
+        <div className="home-container">
+            <div className="home-left">
+                <img src={banner} alt="Bookshelf Banner" className="home-image" />
+            </div>
+
+            <div className="home-right">
+                <div className="home-text">
+                    <h1>Welcome to <span>BookHaven</span> 📚</h1>
+                    <p className="subtitle">Your personal book tracker and favorite list manager.</p>
+                    <p className="description">
+                        Whether you're an avid reader or building your private book game list, BookHaven helps you keep track of the books you love. Add, update, delete, and explore — it's your personal library, your way.
+                    </p>
+
+                    <div className="home-buttons">
+                        <Link to="/book" className="btn primary">📘 View Books</Link>
+                        <Link to="/addbook" className="btn secondary">➕ Add Book</Link>
+                    </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 
