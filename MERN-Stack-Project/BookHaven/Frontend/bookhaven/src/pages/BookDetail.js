@@ -9,16 +9,14 @@ function BookDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const apiUrl = `http://localhost:3004/books/${id}`;
+    const apiUrl = `http://localhost:3008/books/${id}`;
 
     useEffect(() => {
         const fetchBook = async () => {
             try {
                 const response = await axios.get(apiUrl);
                 setData(response.data);
-            } 
-            catch (error) {
-                console.error("Error fetching book data:", error);
+            } catch (error) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -42,21 +40,10 @@ function BookDetail() {
             if (result.isConfirmed) {
                 try {
                     await axios.delete(apiUrl);
-                    Swal.fire(
-                        'Deleted!',
-                        'The book has been deleted.',
-                        'success'
-                    ).then(() => {
-                        navigate('/book');
-                    });
-                } 
-                catch (error) {
-                    console.error("Error deleting book:", error);
-                    Swal.fire(
-                        'Error!',
-                        'There was a problem deleting the book.',
-                        'error'
-                    );
+                    Swal.fire('Deleted!', 'The book has been deleted.', 'success')
+                        .then(() => navigate('/book'));
+                } catch (error) {
+                    Swal.fire('Error!', 'There was a problem deleting the book.', 'error');
                 }
             }
         });
@@ -64,34 +51,31 @@ function BookDetail() {
 
     const handleEdit = () => {
         navigate('/addbook', {
-            state: {
-                book: data
-            }
+            state: { book: data }
         });
     };
 
     return (
         <div className="detail-book-page">
-            <div className="container mt-5">
-                <div className="card shadow-lg p-4 book-card">
-                    <div className="d-flex justify-content-between align-items-center mb-4">
-                        <Link to="/book" className="btn btn-info custom-btn">Back to List</Link>
-                        <button className="btn btn-warning custom-btn m-3" onClick={handleEdit}>
-                            Edit
-                        </button>
-                        <button className="btn btn-danger custom-btn" onClick={handleDelete}>
-                            Delete
-                        </button>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-4">
-                            <img src={data.avatar} alt="Book cover" className="img-fluid rounded shadow-sm book-image" />
+            <div className="book-card-container">
+                {/* Top buttons row */}
+                <div className="top-buttons">
+                    <Link to="/book" className="btn btn-info">← Back to List</Link>
+                    <button className="btn btn-warning" onClick={handleEdit}>Edit</button>
+                    <button className="btn btn-danger" onClick={handleDelete}>Delete</button>
+                </div>
+
+                {/* Card */}
+                <div className="book-card shadow-lg">
+                    <div className="book-content">
+                        <div className="book-image-container">
+                            <img src={data.avatar} alt="Book cover" className="book-image" />
                         </div>
-                        <div className="col-md-8">
-                            <h6 className="text-muted mb-1">BookID : {data.bookID}</h6>
-                            <h1 className="text mb-3" style={{color:'#0e4475'}}>{data.bookTitle}</h1>
-                            <h4 className="text-muted mb-3">Author: {data.authorName}</h4>
-                            <p className="text-justify">{data.description}</p>
+                        <div className="book-details">
+                            <p className="book-id">Book ID: {data.bookID}</p>
+                            <h1 className="book-title">{data.bookTitle}</h1>
+                            <h4 className="book-author">Author: {data.authorName}</h4>
+                            <p className="book-description">{data.description}</p>
                         </div>
                     </div>
                 </div>
