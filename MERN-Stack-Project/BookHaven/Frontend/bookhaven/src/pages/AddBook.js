@@ -1,12 +1,18 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import '../styles/AddBook.css';
 import axios from 'axios';
 
 function AddBook() {
-    const [data, setData] = useState({ bookID: "", bookTitle: "", authorName: "", avatar: "" });
+    const [data, setData] = useState({
+        bookID: "",
+        bookTitle: "",
+        authorName: "",
+        avatar: "",
+        description: ""
+    });
+
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -17,37 +23,37 @@ function AddBook() {
     }, [location.state]);
 
     const handleSubmit = async () => {
-        if (!data.bookID || !data.bookTitle || !data.authorName || !data.avatar) {
+        const { bookID, bookTitle, authorName, avatar } = data;
+
+        if (!bookID || !bookTitle || !authorName || !avatar) {
             Swal.fire({
                 icon: 'error',
-                title: 'Oops...',
-                text: 'Please fill in all the fields!',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Okay'
+                title: 'Missing Fields',
+                text: 'Please fill in all required fields!',
+                confirmButtonColor: '#0e4475'
             });
             return;
         }
 
-        const apiUrl = location.state && location.state.book
-            ? `http://localhost:3004/books/${data.bookID}` 
-            : "http://localhost:3004/books";  
-
+        const apiUrl = location.state?.book
+            ? `http://localhost:3008/books/${data.bookID}`
+            : "http://localhost:3008/books";
 
         try {
-            const response = await axios({
-                method: location.state && location.state.book ? "put" : "post",
+            await axios({
+                method: location.state?.book ? "put" : "post",
                 url: apiUrl,
-                data: data,
+                data,
                 headers: { "Content-Type": "application/json" }
             });
 
             Swal.fire({
                 icon: 'success',
-                title: location.state && location.state.book ? 'Updated!' : 'Submitted!',
-                text: location.state && location.state.book ? 'Book details updated successfully!' : 'Book details submitted successfully!',
-                showConfirmButton: true,
-                confirmButtonColor: '#28a745',
-                confirmButtonText: 'Great!'
+                title: location.state?.book ? 'Updated!' : 'Submitted!',
+                text: location.state?.book
+                    ? 'Book details updated successfully!'
+                    : 'Book added successfully!',
+                confirmButtonColor: '#0e4475'
             }).then(() => {
                 navigate('/book');
             });
@@ -55,9 +61,8 @@ function AddBook() {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'There was an error submitting your data. Please try again.',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Okay'
+                text: 'Something went wrong. Please try again.',
+                confirmButtonColor: '#0e4475'
             });
         }
     };
@@ -72,89 +77,78 @@ function AddBook() {
     };
 
     return (
-        <>
-            <div className='backtohome' style={{ margin: '20px' }}>
-                <Link to="/" className="back-button">
-                    Back to Home
-                </Link>
+        <div className="addbook-page">
+            <Link to="/" className="back-button">← Back to Home</Link>
+            <div className="addbook-card">
+                <h2>{location.state?.book ? "Edit Book Details" : "Add New Book"}</h2>
+
+                <form className="addbook-form">
+                    <div className="form-group">
+                        <label>Book ID</label>
+                        <input
+                            type="text"
+                            placeholder="Enter Book ID"
+                            value={data.bookID}
+                            onChange={(e) => setData({ ...data, bookID: e.target.value })}
+                            onKeyDown={handleKeyDown}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Book Title</label>
+                        <input
+                            type="text"
+                            placeholder="Enter Book Title"
+                            value={data.bookTitle}
+                            onChange={(e) => setData({ ...data, bookTitle: e.target.value })}
+                            onKeyDown={handleKeyDown}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Author Name</label>
+                        <input
+                            type="text"
+                            placeholder="Enter Author Name"
+                            value={data.authorName}
+                            onChange={(e) => setData({ ...data, authorName: e.target.value })}
+                            onKeyDown={handleKeyDown}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Image URL</label>
+                        <input
+                            type="text"
+                            placeholder="Paste image URL"
+                            value={data.avatar}
+                            onChange={(e) => setData({ ...data, avatar: e.target.value })}
+                            onKeyDown={handleKeyDown}
+                        />
+                        {data.avatar && (
+                            <img src={data.avatar} alt="Preview" className="image-preview" />
+                        )}
+                    </div>
+
+                    <div className="form-group">
+                        <label>Description</label>
+                        <textarea
+                            placeholder="Write a short description"
+                            value={data.description}
+                            onChange={(e) => setData({ ...data, description: e.target.value })}
+                        />
+                    </div>
+
+                    <button
+                        type="button"
+                        className="submit-button"
+                        onClick={handleSubmit}
+                    >
+                        {location.state?.book ? "Update Book" : "Submit Book"}
+                    </button>
+                </form>
             </div>
-            <div className="container mt-3 d-flex justify-content-center">
-                <div className="card shadow-lg p-4" style={{ width: "100%", maxWidth: "600px", border: 'none', backgroundColor: '#1e1e2f' }}>
-                    <div className="text-center fs-3 mb-4 text-light">{location.state && location.state.book ? 'Edit Book Details' : 'Enter Book Details'}</div>
-
-                    <form>
-                        <div className="form-group mb-3">
-                            <label htmlFor="text2" className="form-label text-light">Book ID</label>
-                            <input
-                                value={data.bookID}
-                                onChange={(e) => setData({ ...data, bookID: e.target.value })}
-                                onKeyDown={handleKeyDown}
-                                type="text"
-                                className="form-control shadow-sm"
-                                placeholder="Enter Book ID"
-                            />
-                        </div>
-
-                        <div className="form-group mb-3">
-                            <label htmlFor="text1" className="form-label text-light">Book Title</label>
-                            <input
-                                value={data.bookTitle}
-                                onChange={(e) => setData({ ...data, bookTitle: e.target.value })}
-                                onKeyDown={handleKeyDown}
-                                type="text"
-                                className="form-control shadow-sm"
-                                placeholder="Enter Book Title"
-                            />
-                        </div>
-
-                        <div className="form-group mb-3">
-                            <label htmlFor="text3" className="form-label text-light">Author Name</label>
-                            <input
-                                value={data.authorName}
-                                onChange={(e) => setData({ ...data, authorName: e.target.value })}
-                                onKeyDown={handleKeyDown}
-                                type="text"
-                                className="form-control shadow-sm"
-                                placeholder="Enter Author Name"
-                            />
-                        </div>
-
-                        <div className="form-group mb-4">
-                            <label htmlFor="text4" className="form-label text-light">Image Path</label>
-                            <input
-                                value={data.avatar}
-                                onChange={(e) => setData({ ...data, avatar: e.target.value })}
-                                onKeyDown={handleKeyDown}
-                                type="text"
-                                className="form-control shadow-sm"
-                                placeholder="Enter Image URL"
-                            />
-                        </div>
-
-                        <div className="form-group mb-4">
-                            <label htmlFor="text4" className="form-label text-light">Description</label>
-                            <input
-                                value={data.description}
-                                onChange={(e) => setData({ ...data, description: e.target.value })}
-                                onKeyDown={handleKeyDown}
-                                type="text"
-                                className="form-control shadow-sm"
-                                placeholder="Enter description"
-                            />
-                        </div>
-
-                        <div className="text-center">
-                            <button
-                                onClick={handleSubmit}
-                                className="btn btn-success px-4 py-2 shadow"
-                                type="button">
-                                {location.state && location.state.book ? 'Update' : 'Submit'}
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </>
+        </div>
     );
 }
 
