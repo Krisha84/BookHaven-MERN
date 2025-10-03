@@ -86,4 +86,3 @@ Explains the story behind BookHaven with floating bubble animations.
 - **public/**: Public assets and entry point for React.
 
 - `package.json`: Both frontend and backend have separate package.json files to manage dependencies.
-            soo this final done right !? 
